@@ -1,54 +1,80 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jceia <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/05 03:42:08 by jceia             #+#    #+#             */
+/*   Updated: 2020/12/05 04:01:07 by jceia            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdlib.h>
 
-char *ft_strjoin(int size, char **strs, char *sep)
+char	*empty_heap_string(void)
 {
-    char*   res;
-    int     i;
-    int     j
-    int     res_size;
-    int     sep_size;
-    
-    if (size == 0)
-    {
-        res = (char*)malloc((char *));
-        *res = 0;
-        return (res);
-    }
-    res_size = 0;
-    i = 0;
-    while (i < size)
-    {
-        j = 0;
-        while (strs[i][j])
-            j++;
-        res_size += j;
-    }
-    sep_size = 0;
-    while (sep[sep_size])
-        sep_size++;
-    res_size += sep_size * (size - 1);
-    res = (char*)malloc((char*) * res_size);
-    i = 0;
-    while (i < size)
-    {
-        j = 0;
-        while(strs[i][j])
-        {
-            res[res_size] = strs[i][j];
-            res_size++;
-            j++;
-        }
-        i++;
-        if (i == size)
-            continue;
-        j = 0;
-        while (sep[j])
-        {
-            res[res_size] = sep[j];
-            res_size++;
-            j++;
-        }
-    }
-    return (res);
+	char	*s;
+
+	s = malloc(1);
+	*s = 0;
+	return (s);
+}
+
+int		strings_size(int size, char **strs)
+{
+	int	i;
+	int j;
+	int ss_size;
+
+	i = 0;
+	ss_size = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (strs[i][j])
+			j++;
+		ss_size += j;
+		i++;
+	}
+	return (ss_size);
+}
+
+int		ft_strlen(char *str)
+{
+	int index;
+
+	index = 0;
+	while (str[index])
+		index++;
+	return (index);
+}
+
+char	*ft_strjoin(int size, char **strs, char *sep)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		res_size;
+
+	if (size == 0)
+		return (empty_heap_string());
+	res_size = strings_size(size, strs) + ft_strlen(sep) * (size - 1) + 1;
+	result = malloc(res_size);
+	i = 0;
+	res_size = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (strs[i][j])
+			result[res_size++] = strs[i][j++];
+		i++;
+		if (i == size)
+			continue;
+		j = 0;
+		while (sep[j])
+			result[res_size++] = sep[j++];
+	}
+	result[res_size] = '\0';
+	return (result);
 }
