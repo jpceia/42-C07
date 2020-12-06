@@ -14,35 +14,16 @@
 
 char	*freeable_empty_string(void)
 {
-	char	*s;
+	char	*str;
 
-	s = malloc(1);
-	*s = 0;
-	return (s);
-}
-
-int		strings_size(int size, char **strs)
-{
-	int	i;
-	int	j;
-	int	total_size;
-
-	i = 0;
-	total_size = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (strs[i][j])
-			j++;
-		total_size += j;
-		i++;
-	}
-	return (total_size);
+	str = malloc(1);
+	*str = 0;
+	return (str);
 }
 
 int		ft_strlen(char *str)
 {
-	int index;
+	int index; 
 
 	index = 0;
 	while (str[index])
@@ -50,31 +31,42 @@ int		ft_strlen(char *str)
 	return (index);
 }
 
+char	*ft_strcat(char *dest, char *src)
+{
+	int	n;
+	int index;
+
+	n = ft_strlen(dest);
+	index = 0;
+	while (src[index])
+	{
+		dest[n + index] = src[index];
+		index++;
+	}
+	dest[n + index] = 0;
+	return (dest);
+}
+
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
 	char	*result;
-	int		i;
-	int		j;
+	int		index;
 	int		res_size;
 
 	if (size == 0)
 		return (freeable_empty_string());
-	res_size = strings_size(size, strs) + ft_strlen(sep) * (size - 1);
+	res_size = ft_strlen(sep) * (size - 1);
+	index = 0;
+	while (index < size)
+		res_size += ft_strlen(strs[index++]);
 	result = malloc(res_size + 1);
-	i = 0;
-	res_size = 0;
-	while (i < size)
+	index = 0;
+	while (index < size - 1)
 	{
-		j = 0;
-		while (strs[i][j])
-			result[res_size++] = strs[i][j++];
-		i++;
-		if (i == size)
-			continue;
-		j = 0;
-		while (sep[j])
-			result[res_size++] = sep[j++];
+		ft_strcat(result, strs[index]);
+		ft_strcat(result, sep);
+		index++;
 	}
-	result[res_size] = '\0';
+	ft_strcat(result, strs[index]);
 	return (result);
 }
