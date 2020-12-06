@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-char	*empty_heap_string(void)
+char	*freeable_empty_string(void)
 {
 	char	*s;
 
@@ -24,20 +24,20 @@ char	*empty_heap_string(void)
 int		strings_size(int size, char **strs)
 {
 	int	i;
-	int j;
-	int ss_size;
+	int	j;
+	int	total_size;
 
 	i = 0;
-	ss_size = 0;
+	total_size = 0;
 	while (i < size)
 	{
 		j = 0;
 		while (strs[i][j])
 			j++;
-		ss_size += j;
+		total_size += j;
 		i++;
 	}
-	return (ss_size);
+	return (total_size);
 }
 
 int		ft_strlen(char *str)
@@ -58,9 +58,9 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 	int		res_size;
 
 	if (size == 0)
-		return (empty_heap_string());
-	res_size = strings_size(size, strs) + ft_strlen(sep) * (size - 1) + 1;
-	result = malloc(res_size);
+		return (freeable_empty_string());
+	res_size = strings_size(size, strs) + ft_strlen(sep) * (size - 1);
+	result = malloc(res_size + 1);
 	i = 0;
 	res_size = 0;
 	while (i < size)
