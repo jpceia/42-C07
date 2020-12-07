@@ -1,66 +1,87 @@
 
 #include <stdlib.h>
 
-char    *ft_str_chunk(char *str, int start, int end)
+int	ft_strlen(char *str)
 {
-    char    *res;
-    int     index;
+	int index;
 
-    res = (char*)malloc(sizeof(char) * (end - start + 1));
-    index = 0;
-    while (start + index < end)
-    {
-        res[index] = str[start + index];
-        index++;
-    }
-    res[index] = '\0';
-    return (res);
+	index = 0;
+	while(str[index])
+		index++;
+	return (index);
 }
 
-int ft_count_chars(char *str, char *charset)
+int ft_contains(char c, char* charset)
 {
-    int i;
-    int j;
-    int n;
+	while (*charset)
+		if (c == *charset++)
+			return (1);
+	return (0);
+}
 
-    i = 0;
-    j = 0;
-    n = 0;
-    while (str[i])
-    {
-        while (charset[j] && str[i] != charset[j])
-            j++;
-        if (charset[j] != 0)
-            n++;
-        i++;
-    }
-    return n;
+int	ft_count_words(char *str, char *sep_chars)
+{
+	int count;
+	int prev_space;
+
+	count = 0;
+	prev_space = 0;
+	while (*str)
+	{
+		if (ft_contains(*str, sep_chars))
+			prev_space = 1;
+		else if (prev_space)
+		{
+			count++;
+			prev_space = 0;
+		}
+		str++;
+	}
+	return (count);
+}
+
+char	*ft_strndup(char* str, int n)
+{
+	char *res;
+	int size;
+
+	size = ft_strlen(str);
+	size = n < size ? n : size;
+	res = malloc(size + 1);
+	res[size] = 0;
+	while (size--)
+		res[size] = str[size];
+	return res;
 }
 
 char    **ft_split(char *str, char *charset)
 {
-    int     i;
-    int     j;
-    int     n;
-    int     chunk;
-    char    **res;
+	int		index;
+    int     prev_space;
+    char	*str_cpy;
+	char    **str_list;
 
-    res = (char**)malloc(sizeof(char*)*(ft_count_chars(str, charset) + 1));
-    i = 0;
-    j = 0;
-    n = 0;
-    chunk = 0;
-    while (str[i])
+    str_list = malloc(sizeof(*str_list) * (ft_count_words(str, charset) + 1));
+    prev_space = 1;
+	index = 0;
+	str_cpy = str;
+	while (*str)
     {
-        while (charset[j] && (str[i] == charset[j]))
-            j++;
-        if (charset[j] != 0)
-        {
-            res[chunk] = ft_str_chunk(str, n, i);
-            n = i;
-            chunk++;
-        }
+		if (ft_contains(*str, charset))
+		{
+			if (!prev_space)
+				str_list[index++] = ft_strndup(str_cpy, str - str_cpy);
+			prev_space = 1;
+		}
+		else if (prev_space)
+		{
+			str_cpy = str;
+			prev_space = 0;
+		}
+		str++;
     }
-    res[chunk] = ft_str_chunk(str, n, i);
-    return (res);
+	if (!prev_space)
+		str_list[index++] = ft_strndup(str_cpy, str - str_cpy);
+	str_list[index] = 0;
+    return (str_list);
 }
