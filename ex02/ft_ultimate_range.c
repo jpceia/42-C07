@@ -12,10 +12,11 @@
 
 #include <stdlib.h>
 
-int	ft_ultimate_range(int **range, int max, int min)
+int	ft_ultimate_range(int **range, int min, int max)
 {
 	int	index;
 
+	range = malloc(sizeof(*range));
 	if (min < max)
 	{
 		*range = malloc(sizeof(**range) * (max - min));
