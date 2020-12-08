@@ -1,17 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jceia <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/08 05:06:55 by jceia             #+#    #+#             */
+/*   Updated: 2020/12/08 05:28:30 by jceia            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdlib.h>
 
-int	ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
 	int index;
 
 	index = 0;
-	while(str[index])
+	while (str[index])
 		index++;
 	return (index);
 }
 
-int ft_contains(char c, char* charset)
+int		ft_contains(char c, char *charset)
 {
 	while (*charset)
 		if (c == *charset++)
@@ -19,7 +30,7 @@ int ft_contains(char c, char* charset)
 	return (0);
 }
 
-int	ft_count_words(char *str, char *sep_chars)
+int		ft_count_words(char *str, char *sep_chars)
 {
 	int count;
 	int prev_space;
@@ -40,10 +51,10 @@ int	ft_count_words(char *str, char *sep_chars)
 	return (count);
 }
 
-char	*ft_strndup(char* str, int n)
+char	*ft_strndup(char *str, int n)
 {
-	char *res;
-	int size;
+	char	*res;
+	int		size;
 
 	size = ft_strlen(str);
 	size = n < size ? n : size;
@@ -51,22 +62,22 @@ char	*ft_strndup(char* str, int n)
 	res[size] = 0;
 	while (size--)
 		res[size] = str[size];
-	return res;
+	return (res);
 }
 
-char    **ft_split(char *str, char *charset)
+char	**ft_split(char *str, char *charset)
 {
 	int		index;
-    int     prev_space;
-    char	*str_cpy;
-	char    **str_list;
+	int		prev_space;
+	char	*str_cpy;
+	char	**str_list;
 
-    str_list = malloc(sizeof(*str_list) * (ft_count_words(str, charset) + 1));
-    prev_space = 1;
+	str_list = malloc(sizeof(*str_list) * (ft_count_words(str, charset) + 1));
+	prev_space = 1;
 	index = 0;
 	str_cpy = str;
 	while (*str)
-    {
+	{
 		if (ft_contains(*str, charset))
 		{
 			if (!prev_space)
@@ -79,9 +90,9 @@ char    **ft_split(char *str, char *charset)
 			prev_space = 0;
 		}
 		str++;
-    }
+	}
 	if (!prev_space)
 		str_list[index++] = ft_strndup(str_cpy, str - str_cpy);
 	str_list[index] = 0;
-    return (str_list);
+	return (str_list);
 }
