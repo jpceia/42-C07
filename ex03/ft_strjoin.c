@@ -6,7 +6,7 @@
 /*   By: jceia <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 03:42:08 by jceia             #+#    #+#             */
-/*   Updated: 2020/12/05 04:01:07 by jceia            ###   ########.fr       */
+/*   Updated: 2020/12/08 06:20:43 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*freeable_empty_string(void)
 
 int		ft_strlen(char *str)
 {
-	int index; 
+	int index;
 
 	index = 0;
 	while (str[index])
