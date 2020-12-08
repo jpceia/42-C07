@@ -6,21 +6,11 @@
 /*   By: jceia <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 05:06:55 by jceia             #+#    #+#             */
-/*   Updated: 2020/12/08 05:28:52 by jceia            ###   ########.fr       */
+/*   Updated: 2020/12/08 05:59:34 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
-int		ft_strlen(char *str)
-{
-	int index;
-
-	index = 0;
-	while (str[index])
-		index++;
-	return (index);
-}
 
 int		ft_contains(char c, char *charset)
 {
@@ -56,7 +46,9 @@ char	*ft_strndup(char *str, int n)
 	char	*res;
 	int		size;
 
-	size = ft_strlen(str);
+	size = 0;
+	while (str[size])
+		size++;
 	size = n < size ? n : size;
 	res = malloc(size + 1);
 	res[size] = 0;
