@@ -6,7 +6,7 @@
 /*   By: jceia <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 05:06:55 by jceia             #+#    #+#             */
-/*   Updated: 2020/12/08 05:28:30 by jceia            ###   ########.fr       */
+/*   Updated: 2020/12/08 05:28:52 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		ft_count_words(char *str, char *sep_chars)
 	int prev_space;
 
 	count = 0;
-	prev_space = 0;
+	prev_space = 1;
 	while (*str)
 	{
 		if (ft_contains(*str, sep_chars))
