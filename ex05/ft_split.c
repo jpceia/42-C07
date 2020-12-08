@@ -6,7 +6,7 @@
 /*   By: jceia <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 05:06:55 by jceia             #+#    #+#             */
-/*   Updated: 2020/12/08 05:59:34 by jceia            ###   ########.fr       */
+/*   Updated: 2020/12/08 06:19:51 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,12 @@ char	*ft_strndup(char *str, int n)
 	return (res);
 }
 
-char	**ft_split(char *str, char *charset)
+char	**ft_split_core(char **str_list, char *str, char *charset)
 {
 	int		index;
 	int		prev_space;
 	char	*str_cpy;
-	char	**str_list;
 
-	str_list = malloc(sizeof(*str_list) * (ft_count_words(str, charset) + 1));
 	prev_space = 1;
 	index = 0;
 	str_cpy = str;
@@ -85,6 +83,17 @@ char	**ft_split(char *str, char *charset)
 	}
 	if (!prev_space)
 		str_list[index++] = ft_strndup(str_cpy, str - str_cpy);
-	str_list[index] = 0;
+	return (str_list);
+}
+
+char	**ft_split(char *str, char *charset)
+{
+	int		size;
+	char	**str_list;
+
+	size = ft_count_words(str, charset);
+	str_list = malloc(sizeof(*str_list) * (size + 1));
+	str_list[size] = 0;
+	str_list = ft_split_core(str_list, str, charset);
 	return (str_list);
 }
